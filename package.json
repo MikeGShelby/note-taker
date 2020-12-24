@@ -1,0 +1,29 @@
+{
+  "name": "note-taker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikeGShelby/note-taker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MikeGShelby/note-taker/issues"
+  },
+  "homepage": "https://github.com/MikeGShelby/note-taker#readme",
+
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies":{
+    "nodemon": "^2.0.6"
+  }
+}
