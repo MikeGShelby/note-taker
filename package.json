@@ -19,11 +19,11 @@
     "url": "https://github.com/MikeGShelby/note-taker/issues"
   },
   "homepage": "https://github.com/MikeGShelby/note-taker#readme",
-
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "uuid": "^8.3.2"
   },
-  "devDependencies":{
+  "devDependencies": {
     "nodemon": "^2.0.6"
   }
 }
