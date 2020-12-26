@@ -32,8 +32,6 @@ function deleteNote(deletedNote) {
         path.join(__dirname, './db/db.json'),
         JSON.stringify({ notes: newNotesArray }, null, 2)
       );
-
-    return newNotesArray;
 };
 function createNewNote(body, notesArray) {
     const note = body;
@@ -55,10 +53,6 @@ function validateNote(note) {
     return true;
 }
 
-// Display all notes in JSON format
-app.get('/api/notes', (req, res) => {
-    res.json(notes);
-});
 
 // Display main landing page
 app.get('/', (req, res) => {
@@ -70,9 +64,15 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
+// Display all notes in JSON format
+app.get('/api/notes', (req, res) => {
+    res.json(notes);
+});
+
 // Display note data based on a provided id
 app.get('/api/notes/:id', (req, res) => {
     const result = findById(req.params.id, notes);
+    console.log(result);
     if (result) {
         res.json(result);
     } else {
@@ -94,12 +94,13 @@ app.post('/api/notes', (req, res) => {
 // Delete note
 app.delete('/api/notes/:id', (req, res) => {
     const result = findById(req.params.id, notes);
-
+    console.log(result);
     if (result) {
         deleteNote(result);
     } else {
         res.send(404);
     }
+
 });
 
 app.listen(PORT, () => {

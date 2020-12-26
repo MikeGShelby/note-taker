@@ -33,7 +33,6 @@ const getNotes = () =>
     },
   });
 
-
 // Accepts note object (title and text) as argument and posts it to notes JSON file
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -87,13 +86,12 @@ const handleNoteDelete = (e) => {
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
 
-  console.log(noteId);
-
   if (activeNote.id === noteId) {
     activeNote = {};
-  }
+  };
 
-  deleteNote(noteId).then(() => {
+  deleteNote(noteId).
+  then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
