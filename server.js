@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
 
-
 const app = express();
 
 // parse incoming string or array data
@@ -53,7 +52,6 @@ function validateNote(note) {
     return true;
 }
 
-
 // Display main landing page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
@@ -81,7 +79,7 @@ app.get('/api/notes/:id', (req, res) => {
 });
 
 // Add new note
-app.post('/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
     // if any data in req.body is incorrect, send 400 error back
     if (!validateNote(req.body)) {
         res.status(400).send('Please provide a title for your note before saving');
@@ -92,15 +90,13 @@ app.post('/notes', (req, res) => {
 });
 
 // Delete note
-app.delete('/notes/:id', (req, res) => {
+app.delete('/api/notes/:id', (req, res) => {
     const result = findById(req.params.id, notes);
-    console.log(result);
     if (result) {
         deleteNote(result);
     } else {
         res.send(404);
     }
-
 });
 
 app.listen(PORT, () => {
