@@ -22,16 +22,19 @@ function findById(id, notesArray) {
     return result;
 }
 
+// Delete note from json file (provided note object argument)
 function deleteNote(deletedNote) {
+    // Create new array that does not included deleted note
     const newNotesArray = notes.filter(note => note.id != deletedNote.id);
 
+    // create new json file with new array of note objects
     fs.writeFileSync(
         path.join(__dirname, './db/db.json'),
         JSON.stringify({ notes: newNotesArray }, null, 2)
       );
 
     return newNotesArray;
-}
+};
 function createNewNote(body, notesArray) {
     const note = body;
     note.id = uuid.v4();
