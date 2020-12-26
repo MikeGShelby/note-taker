@@ -81,7 +81,7 @@ app.get('/api/notes/:id', (req, res) => {
 });
 
 // Add new note
-app.post('/api/notes', (req, res) => {
+app.post('/notes', (req, res) => {
     // if any data in req.body is incorrect, send 400 error back
     if (!validateNote(req.body)) {
         res.status(400).send('Please provide a title for your note before saving');
@@ -92,7 +92,7 @@ app.post('/api/notes', (req, res) => {
 });
 
 // Delete note
-app.delete('/api/notes/:id', (req, res) => {
+app.delete('/notes/:id', (req, res) => {
     const result = findById(req.params.id, notes);
     console.log(result);
     if (result) {
