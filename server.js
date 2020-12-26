@@ -11,6 +11,8 @@ const app = express();
 app.use(express.urlencoded());
 // parse incoming JSON data
 app.use(express.json());
+// Make all public files available without server endpoints
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3001;
 
@@ -20,6 +22,16 @@ function findById(id, notesArray) {
     return result;
 }
 
+function deleteNote(deletedNote) {
+    const newNotesArray = notes.filter(note => note.id != deletedNote.id);
+
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify({ notes: newNotesArray }, null, 2)
+      );
+
+    return newNotesArray;
+}
 function createNewNote(body, notesArray) {
     const note = body;
     note.id = uuid.v4();
@@ -40,14 +52,19 @@ function validateNote(note) {
     return true;
 }
 
-// Display main landing page
-app.get('/', (req, res) => {
-    res.send('Main page');
-});
-
-// Display all notes
+// Display all notes in JSON format
 app.get('/api/notes', (req, res) => {
     res.json(notes);
+});
+
+// Display main landing page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+// Display notes page
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
 // Display note data based on a provided id
@@ -71,6 +88,16 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
+// Delete note
+app.delete('/api/notes/:id', (req, res) => {
+    const result = findById(req.params.id, notes);
+
+    if (result) {
+        deleteNote(result);
+    } else {
+        res.send(404);
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);

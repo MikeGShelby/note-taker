@@ -33,6 +33,8 @@ const getNotes = () =>
     },
   });
 
+
+// Accepts note object (title and text) as argument and posts it to notes JSON file
 const saveNote = (note) =>
   fetch('/api/notes', {
     method: 'POST',
@@ -40,6 +42,15 @@ const saveNote = (note) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
+  })
+  .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      alert('Error: ' + response.statusText);
+  })
+  .then(postResponse => {
+        console.log(postResponse);
   });
 
 const deleteNote = (id) =>
@@ -64,12 +75,14 @@ const renderActiveNote = () => {
   }
 };
 
+// Runs when save icon is clicked. Handler captures title and text value in newNote object and saves it to JSON file. Then gets new list of notes and renders it to notes list.
 const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
   };
-  saveNote(newNote).then(() => {
+  saveNote(newNote).
+  then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -100,7 +113,7 @@ const handleNoteView = (e) => {
   renderActiveNote();
 };
 
-// Sets the activeNote to and empty object and allows the user to enter a new note
+// Sets the activeNote to an empty object and allows the user to enter a new note
 const handleNewNoteView = (e) => {
   activeNote = {};
   renderActiveNote();
@@ -114,11 +127,11 @@ const handleRenderSaveBtn = () => {
   }
 };
 
-// Render the list of note titles
+// Render the list of note titles after getNotes() is run
 const renderNoteList = async (notes) => {
   let jsonNotes = await notes.json();
   if (window.location.pathname === '/notes') {
-    noteList.forEach((el) => (el.innerHTML = ''));
+    noteList.forEach(el => el.innerHTML = '');
   }
 
   let noteListItems = [];
